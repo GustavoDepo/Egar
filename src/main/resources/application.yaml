@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: EGAR
+
+timeExpression: "*/1 * * * * *"
+
+filesPath:
+  files: "data/files"
+  failed: "data/failed"
+  processed: "data/processed"
+
+

@@ -1,0 +1,50 @@
+Необходимо реализовать интеграцию по загрузки json файла в Rest сервис
+Json файл следующей структуры
+
+Что нудно сделать.
+1. Реализовать интеграцию с параметрами:
+– TimeExpression – Таймер обработки данных;
+– FilesPath – Директория с файлами json;
+2. По таймеру TimeExpression интеграция должна отслеживать появление json-файлов в директории FilesPath.
+После начала обработки файл перемещается в папку «processed».
+Далее интеграция должна преобразовывать данные из файла в формат JSON и отправлять на адрес REST-сервиса
+ LM http://RestURL/api/v1 в метод PUT на URL /data/testdata
+Если Rest сервис присылает в ответ ошибку (code <> 200), то файл необходимо перенести в папку «failed».
+
+Если json-сообщение обработано успешно (code = 200), но в ответе от Rest сервиса есть ошибки ("":
+ false), то нужно подготовить html файл с ответом от Rest сервиса.
+3. Маппинг для отправки в Rest сервис:
+
+Ресурс загрузки: /data/testdata
+
+Поле в методе Rest сервис 	Заполнение из JSON
+date	DATE
+в формате YYYY-MM-DD
+currency1	CURRENCY_1
+currency2	CURRENCY_2
+periodNumber	PERIOD_NUMBER
+periodUnit	PERIOD_UNIT_CODE
+positiveCoefficient	POSITIVE_COEFFICIENT
+разделитель целой и дробной части «.»
+negativeCoefficient	NEGATIVE_COEFFICIENT
+разделитель целой и дробной части «.»
+id	EXTERNAL_ID
+
+Post http://localhost:8080/api/v1/task?timeexpression=1123&filesPath=files/test.json
+
+Body:
+[
+  {
+    "id": "14112024_USDRUR_1D-Kcorrections",
+    "date": "2024-11-14",
+    "currency1": "USD",
+    "currency2": "RUR",
+    "periodNumber": 1,
+    "periodUnit": "D",
+    "positiveCoefficient": 1.02,
+    "negativeCoefficient": 0.98
+  }
+]
+
+Задачи для SQL
+Написать запрос, удаляющий дублирующую строку из таблицы.
