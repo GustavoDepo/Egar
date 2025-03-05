@@ -1,0 +1,7 @@
+DELETE FROM table
+WHERE (date, currency1, currency2, periodNumber, periodUnitCode, positiveCoeff, negativeCoeff) IN (
+    SELECT date, currency1, currency2, periodNumber, periodUnitCode, positiveCoeff, negativeCoeff
+    FROM table
+    GROUP BY date, currency1, currency2, periodNumber, periodUnitCode, positiveCoeff, negativeCoeff
+    HAVING COUNT(*) > 1
+);
